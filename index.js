@@ -1,8 +1,8 @@
 const express = require("express");
 const cors = require("cors");
-const urlRoute = require("../routes/url"); // Adjusted path because we're inside /api
-const { connectToMongoDB } = require("../connect");
-const URL = require("../models/url");
+const urlRoute = require("./routes/url"); // Adjusted path because we're inside /api
+const { connectToMongoDB } = require("./connect");
+const URL = require("./models/url");
 require("dotenv").config();
 
 const mongourl = process.env.MONGO_URL;
