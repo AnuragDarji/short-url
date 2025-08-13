@@ -2,11 +2,13 @@ const express = require("express");
 const urlRoute = require("./routes/url");
 const { connectToMongoDB } = require("./connect");
 const URL = require("./models/url");
+require("dotenv").config();
+const mongourl = process.env.MONGO_URL;
 
 const app = express();
 const PORT = 8001;
 
-connectToMongoDB("mongodb://127.0.0.1:27017/short-url").then(() =>
+connectToMongoDB(mongourl).then(() =>
   console.log("Mongodb connected")
 );
 app.use(express.json());
