@@ -1,19 +1,21 @@
 const express = require("express");
 const cors = require("cors");
-const urlRoute = require("../routes/url"); // Adjusted path because we're inside /api
-const { connectToMongoDB } = require("../connect");
-const URL = require("../models/url");
+const urlRoute = require("./routes/url"); // Adjusted path because we're inside /api
+const { connectToMongoDB } = require("./connect");
+const URL = require("./models/url");
 require("dotenv").config();
 
 const mongourl = process.env.MONGO_URL;
 const app = express();
 
 // ✅ Enable CORS
-app.use(cors({
-  origin: "*", // Change to your frontend URL in production
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"]
-}));
+app.use(
+  cors({
+    origin: "*", // Change to your frontend URL in production
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
 // Middleware
 app.use(express.json());
