@@ -7,7 +7,7 @@ require("dotenv").config();
 
 const mongourl = process.env.MONGO_URL;
 const app = express();
-
+const PORT = 8001;
 const allowedOrigins = [
   "http://localhost:5173",
   "https://yourfrontend.vercel.app"
@@ -15,6 +15,7 @@ const allowedOrigins = [
 
 app.use(cors({
   origin: (origin, callback) => {
+    // Allow requests with no origin (like mobile apps, curl)
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
@@ -36,7 +37,11 @@ app.get("/:shortId", async (req, res) => {
   const shortId = req.params.shortId;
   const entry = await URL.findOneAndUpdate(
     { shortId },
-    { $push: { visitHistroy: { timestamp: Date.now() } } }
+    {
+      $push: {
+        visitHistroy: { timestamp: Date.now() },
+      },
+    }
   );
 
   if (!entry) {
@@ -46,5 +51,4 @@ app.get("/:shortId", async (req, res) => {
   res.redirect(entry.redirectURL);
 });
 
-// Export app for Vercel
-module.exports = app;
+app.listen(PORT, () => console.log(`Server started at PORT: ${PORT}`));
