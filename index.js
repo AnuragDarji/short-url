@@ -33,6 +33,8 @@ connectToMongoDB(mongourl).then(() =>
 app.use(express.json());
 app.use("/url", urlRoute);
 
+app.get("/", (req,res)=>res.status(200).json({msg: "Hello world"}))
+
 app.get("/:shortId", async (req, res) => {
   const shortId = req.params.shortId;
   const entry = await URL.findOneAndUpdate(
