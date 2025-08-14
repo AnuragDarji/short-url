@@ -12,7 +12,8 @@ const app = express();
 const allowedOrigins = [
   "http://localhost:5173",
   "https://short-url-ruby-eight.vercel.app",
-  "https://df10swf3-5173.inc1.devtunnels.ms"
+  "https://df10swf3-5173.inc1.devtunnels.ms",
+  "https://shorturl-fawn.vercel.app"
 ];
 
 // CORS setup with error handling
