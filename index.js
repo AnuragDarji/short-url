@@ -10,7 +10,8 @@ const app = express();
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://yourfrontend.vercel.app"
+  "https://short-url-ruby-eight.vercel.app",
+  "https://df10swf3-5173.inc1.devtunnels.ms"
 ];
 
 app.use(cors({
