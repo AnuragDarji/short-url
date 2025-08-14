@@ -1,29 +1,18 @@
 const express = require("express");
 const cors = require("cors");
-const urlRoute = require("./routes/url");
-const { connectToMongoDB } = require("./connect");
-const URL = require("./models/url");
+const urlRoute = require("../routes/url"); // Adjusted path because we're inside /api
+const { connectToMongoDB } = require("../connect");
+const URL = require("../models/url");
 require("dotenv").config();
 
 const mongourl = process.env.MONGO_URL;
 const app = express();
 
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://short-url-ruby-eight.vercel.app",
-  "https://df10swf3-5173.inc1.devtunnels.ms"
-];
-
+// ✅ Enable CORS
 app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("CORS not allowed"));
-    }
-  },
+  origin: "*", // Change to your frontend URL in production
   methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
 connectToMongoDB(mongourl).then(() =>
