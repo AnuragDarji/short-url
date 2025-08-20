@@ -10,20 +10,27 @@ const app = express();
 
 // Allowed CORS origins
 const allowedOrigins = [
-  "http://localhost:5173",
-  "https://short-url-ruby-eight.vercel.app",
-  "https://df10swf3-5173.inc1.devtunnels.ms",
-  "https://shorturl-fawn.vercel.app",
+  "http://localhost:5173", // local dev
+  "https://short-url-ruby-eight.vercel.app", // backend vercel
+  "https://shorturl-fawn.vercel.app", // frontend vercel
+  "https://df10swf3-5173.inc1.devtunnels.ms", // dev tunnel
 ];
 
-// CORS setup with error handling
+// CORS setup
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
+      // Allow requests with no origin (like mobile apps, curl, Postman)
+      if (!origin) return callback(null, true);
+
+      if (
+        allowedOrigins.includes(origin) ||
+        /\.vercel\.app$/.test(origin) // allow all vercel subdomains
+      ) {
         callback(null, true);
       } else {
-        callback(new Error("CORS not allowed"));
+        console.error("Blocked by CORS:", origin);
+        callback(new Error("CORS not allowed for this origin"));
       }
     },
     methods: ["GET", "POST", "PUT", "DELETE"],
