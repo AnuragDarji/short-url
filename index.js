@@ -15,21 +15,16 @@ const allowedOrigins = ["http://localhost:5173", /\.vercel\.app$/];
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (!origin || allowedOrigins.some((o) =>
-          o instanceof RegExp ? o.test(origin) : o === origin
-        )) {
+      if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
         callback(new Error("CORS not allowed"));
       }
     },
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
-
-// Ensure OPTIONS preflight handled
-app.options("*", cors());
 
 // Connect to MongoDB with error handling
 connectToMongoDB(mongourl)
