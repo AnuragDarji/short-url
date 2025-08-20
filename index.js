@@ -31,11 +31,6 @@ app.use(
   })
 );
 
-app.use((req, res, next) => {
-  console.log("Request Origin:", req.headers.origin);
-  next();
-});
-
 // Connect to MongoDB with error handling
 connectToMongoDB(mongourl)
   .then(() => console.log("MongoDB connected"))
