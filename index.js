@@ -42,6 +42,7 @@ app.use(express.json());
 
 // Routes
 app.use("/url", urlRoute);
+app.use("/api", require("./routes/auth"));
 
 // Health check route
 app.get("/", (req, res) => {

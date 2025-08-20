@@ -11,7 +11,16 @@ const urlSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    visitHistroy: [{ timestamp: { type: Number } }],
+    visitHistroy: [
+      {
+        timestamp: { type: Number },
+      },
+    ],
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User", // reference to users collection
+      required: true,
+    },
   },
   { timestamps: true }
 );

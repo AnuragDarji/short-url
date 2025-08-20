@@ -9,6 +9,7 @@ async function handleGenerateNewShortUrl(req, res) {
     shortId: shortID,
     redirectURL: body.url,
     visitHistroy: [],
+    userId: req.user.id,
   });
 
   return res.json({ id: shortID });
@@ -23,4 +24,25 @@ async function handleGetAnalytics(req, res) {
   });
 }
 
-module.exports = { handleGenerateNewShortUrl, handleGetAnalytics };
+async function handleUserAnalytics(req, res) {
+  try {
+    console.log(req.user);
+    const userId = req.user.id; 
+
+
+    const urls = await URL.find({ userId });
+
+    const analytics = urls.map((url) => ({
+      shortId: url.shortId,
+      redirectUrl: url.redirectURL,
+      totalClicks: url.visitHistroy.length,
+      analytics: url.visitHistroy,
+    }));
+
+    res.json({ urls: analytics });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
+module.exports = { handleGenerateNewShortUrl, handleGetAnalytics, handleUserAnalytics };
