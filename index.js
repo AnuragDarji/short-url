@@ -9,27 +9,27 @@ const mongourl = process.env.MONGO_URL;
 const app = express();
 
 // Allowed CORS origins
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://short-url-ruby-eight.vercel.app",
-  "https://df10swf3-5173.inc1.devtunnels.ms",
-  "https://shorturl-fawn.vercel.app",
-];
+const allowedOrigins = ["http://localhost:5173", /\.vercel\.app$/];
 
 // CORS setup with error handling
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
+      if (!origin || allowedOrigins.some((o) =>
+          o instanceof RegExp ? o.test(origin) : o === origin
+        )) {
         callback(null, true);
       } else {
         callback(new Error("CORS not allowed"));
       }
     },
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
   })
 );
+
+// Ensure OPTIONS preflight handled
+app.options("*", cors());
 
 // Connect to MongoDB with error handling
 connectToMongoDB(mongourl)
