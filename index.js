@@ -9,7 +9,12 @@ const mongourl = process.env.MONGO_URL;
 const app = express();
 
 // Allowed CORS origins
-const allowedOrigins = ["http://localhost:5173", /\.vercel\.app$/];
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://short-url-ruby-eight.vercel.app",
+  "https://df10swf3-5173.inc1.devtunnels.ms",
+  "https://shorturl-fawn.vercel.app",
+];
 
 // CORS setup with error handling
 app.use(
